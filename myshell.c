@@ -133,11 +133,16 @@ int lsh_mypwd(char **args)
  */
 int lsh_myecho(char **args)
 {
-    if (args[1] == NULL) {
-        fprintf(stderr, "lsh: expected argument to \"myecho\"\n");
-    } else {
-        printf("%s\n", args[1]);
+    for (int i = 1; args[i] != NULL; i++)
+    {
+        if (i > 1)
+        {
+            printf(" ");
+        }
+        printf("%s", args[i]);
     }
+
+    printf("\n");
     return 1;
 }
 
