@@ -112,7 +112,7 @@ int lsh_exit(char **args)
 
 /**
    @brief Builtin command: print working directory.
-   @param args
+   @param args List of args.
    @return Always returns 1, to continue executing.
  */
 int lsh_mypwd(char **args)
@@ -163,13 +163,15 @@ int lsh_mycd(char **args)
     if (chdir(dir) != 0) {
         perror("lsh");
     } else {
-        // Directory change successful, perform long listing
+        // Directory change successful, perform long list
         pid_t pid = fork();
         if (pid == 0) {
             // Child process
             char *ls_args[] = {"ls", "-l", NULL};
             execvp("ls", ls_args);
-            perror("lsh"); // If execvp fails
+			
+			// Reach if failed
+            perror("lsh"); 
             exit(EXIT_FAILURE);
         } else if (pid < 0) {
             // Error forking
